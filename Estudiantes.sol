@@ -2,17 +2,21 @@
 pragma solidity *0.8.10;
 
 
-contract Estudiante{
-
+contract Estudiante
+{
 //se declaran variables tanto para el nombre como el apellido como el curso
     string private _name;
     string private _surname;
     string private _course;
 
     //
+    bool private _results;
+
+    //
     address private _treacher;
 
-    // creamos un mapping que asocia el valor de el nombre de la materia con la nota de la materia
+    //creamos un mapping que asocia el valor de el
+    //nombre de la materia con la nota de la materia
     mapping(string => uint8)private notas_materias;
 
     constructor(string memory name_, surname_, division_)
@@ -40,6 +44,34 @@ contract Estudiante{
     {
         require(msg.sender == _teacher "solo el profesor puede acceder a esta informacion");
         notas_materias[materia_] = nota_;
+    }
+
+    //obtiene el valor (nota) correspondiente para el string (materia)
+    function nota_materia(string memory materia_)
+    {
+        return notas_materias[materia_];
+    }
+
+    //en caso de que el valor almacenado en el mapping para el indice 
+    //materia sea mayor a 60 va a entrar al if y devolver trueen caso 
+    //de que no sea mayor a 60 va a entrar en el else y devolver false
+    function aprobo(string memory materia_)
+    {
+        if (materia_ >= 60)
+        {
+            results = true;
+            return results;
+        }
+        else 
+        {
+            results = false;
+            return results;
+        }
+    }
+
+    function promedio()
+    {
+
     }
 
     //devuelve la división
