@@ -6,6 +6,7 @@ pragma solidity *0.8.10;
 
 contract Estudiante
 {
+    
 //se declaran variables tanto para el nombre como el apellido como el curso
     string private _name;
     string private _surname;
