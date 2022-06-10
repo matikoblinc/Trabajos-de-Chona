@@ -7,19 +7,17 @@ contract Estudiante
 //se declaran variables tanto para el nombre como el apellido como el curso
     string private _name;
     string private _surname;
-    string private _course;
+    string private _course;    
 
     //
-    bool private _results;
+    address private _teacher;
 
-    //
-    address private _treacher;
 
     //creamos un mapping que asocia el valor de el
     //nombre de la materia con la nota de la materia
     mapping(string => uint8)private notas_materias;
 
-    constructor(string memory name_, surname_, division_)
+    constructor(string memory name_, string memory surname_, string memory division_)
     {
         _name = name_;
         _surname = surname_;
@@ -36,18 +34,21 @@ contract Estudiante
     //funcion que devuelve apellido seguido por nombre
     function nombre_completo() public view returns (string memory)
     {
-        returns (abi.encodedPacked(_surname, _name));
+        return string(abi.encodePacked(_surname, _name));
     }
 
     //la funcion asococia un valor numerico (nota) a una materia y los guarda como mapping
     function set_nota_materia(uint8 nota_, string memory materia_) public
     {
-        require(msg.sender == _teacher "solo el profesor puede acceder a esta informacion");
+        require(msg.sender == _teacher, "solo el profesor puede acceder a esta informacion");
+
         notas_materias[materia_] = nota_;
+
+        ArrayMaterias[materia_];
     }
 
     //obtiene el valor (nota) correspondiente para el string (materia)
-    function nota_materia(string memory materia_)
+    function nota_materia(string memory materia_) public view returns (uint8)
     {
         return notas_materias[materia_];
     }
@@ -55,29 +56,41 @@ contract Estudiante
     //en caso de que el valor almacenado en el mapping para el indice 
     //materia sea mayor a 60 va a entrar al if y devolver trueen caso 
     //de que no sea mayor a 60 va a entrar en el else y devolver false
-    function aprobo(string memory materia_)
+    function aprobo(string memory materia_) public view returns (bool)
     {
         if (materia_ >= 60)
         {
-            results = true;
-            return results;
+            return true;
         }
         else 
         {
-            results = false;
-            return results;
+            return false;
         }
     }
 
-    function promedio()
+    //Devuelve el promedio entre todos los valores de nota_materia
+    //para hacer esto utiliza el ArrayMateria como las keys para cada
+    //valor de nota_materia.
+    function promedio() public view returns (int)
     {
+        string[] ArrayMaterias;
+        
+        int _promedio;
 
+        for (int i = 0; i <= ArrayMaterias.Length; i++)
+        {
+            _promedio += nota_materia[ArrayMaterias[i]];
+        }
+
+        _promedio = _promedio / ArrayMateras.Length;
+        
+        return _promedio; 
     }
 
     //devuelve la división
     function curso() public view returns (string memory)
     {
-        returns _division; 
+        return _course; 
     }
 
 }
