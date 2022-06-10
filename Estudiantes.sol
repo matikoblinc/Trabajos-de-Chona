@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 //La versión de Solidity a usar será la 0.8.10
 pragma solidity *0.8.10;
 
@@ -11,6 +13,8 @@ contract Estudiante
 
     //
     address private _teacher;
+
+    string[] private ArrayMaterias;
 
 
     //creamos un mapping que asocia el valor de el
@@ -34,7 +38,7 @@ contract Estudiante
     //funcion que devuelve apellido seguido por nombre
     function nombre_completo() public view returns (string memory)
     {
-        return string(abi.encodePacked(_surname, _name));
+        return string(abi.encodePacked(_surname, " ", _name));
     }
 
     //la funcion asococia un valor numerico (nota) a una materia y los guarda como mapping
@@ -44,7 +48,7 @@ contract Estudiante
 
         notas_materias[materia_] = nota_;
 
-        ArrayMaterias[materia_];
+        ArrayMaterias.push(materia_);
     }
 
     //obtiene el valor (nota) correspondiente para el string (materia)
@@ -58,7 +62,7 @@ contract Estudiante
     //de que no sea mayor a 60 va a entrar en el else y devolver false
     function aprobo(string memory materia_) public view returns (bool)
     {
-        if (materia_ >= 60)
+        if (notas_materias[materia_] >= 60)
         {
             return true;
         }
@@ -71,21 +75,20 @@ contract Estudiante
     //Devuelve el promedio entre todos los valores de nota_materia
     //para hacer esto utiliza el ArrayMateria como las keys para cada
     //valor de nota_materia.
-    function promedio() public view returns (int)
-    {
-        string[] ArrayMaterias;
-        
-        int _promedio;
+  function promedio() public view returns (uint)
+    {   
+        uint _longitud = ArrayMaterias.length;
 
-        for (int i = 0; i <= ArrayMaterias.Length; i++)
+        uint _promedio = 0;
+
+        for (uint8 i = 0; i < _longitud; i++)
         {
-            _promedio += nota_materia[ArrayMaterias[i]];
+            _promedio += notas_materias[ArrayMaterias[i]];
         }
 
-        _promedio = _promedio / ArrayMateras.Length;
-        
-        return _promedio; 
+        return _promedio / _longitud;
     }
+
 
     //devuelve la división
     function curso() public view returns (string memory)
